@@ -41,7 +41,7 @@ public class SimpleGenerator {
 		kafkaProducer = new KafkaProducer<>(config.getKafkaProps());			
 		
 		Timer timer = new Timer();
-		timer.schedule(new ProducerTask(), 0, 1000); //start immediately and post every second
+		timer.schedule(new ProducerTask(), 0, Integer.parseInt(System.getenv("INTERVAL"))); //start immediately and post every second
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
@@ -58,7 +58,7 @@ public class SimpleGenerator {
 		public void run() {
 	
 			String message = messageService.getMessageData();
-			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("interactions", message);
+			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(System.getenv("KAFKA_TOPIC"), message);
 			
 			// send and process asynchronous
 			kafkaProducer.send(producerRecord, new Callback() {
