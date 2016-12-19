@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import uk.co.force.kafkagen.services.MessageService;
@@ -20,12 +19,11 @@ import uk.co.force.kafkagen.services.MessageService;
 public class SimpleGenerator {
 
 	protected Logger logger;
-
+	protected MessageService messageService;
+	protected Producer<String,String> kafkaProducer;
 	
 	public static void main (String[] args) {
-		
 		new SimpleGenerator();
-
 	}	
 	
 	public SimpleGenerator() {
@@ -33,26 +31,24 @@ public class SimpleGenerator {
 		logger = LoggerFactory.getLogger(SimpleGenerator.class);
 		logger.info("Started...");
 		
+		// get the injected message service that will generate the messages we send to Kafka
+		// if you want to change the message, simply configure a concrete implementation of the message service
+		// in the ApplicationInjector class
+		Injector injector = Guice.createInjector(new ApplicationInjector());
+		messageService = injector.getInstance(MessageService.class);	
+
+		// initialise kafka producer
+		KafkaConfig config = new KafkaConfig();
+		kafkaProducer = new KafkaProducer<>(config.getKafkaProps());			
+		
 		Timer timer = new Timer();
 		timer.schedule(new ProducerTask(), 0, 1000); //start immediately and post every second
 		
 	}	
 	
 	class ProducerTask extends TimerTask {
-
-		private MessageService messageService;
-		private Producer<String,String> kafkaProducer;
 		
-		public ProducerTask() {
-			// get the injected message service that will generate the messages we send to Kafka
-			// if you want to change the message, simply configure a concrete implementation of the message service
-			// in the ApplicationInjector class
-			Injector injector = Guice.createInjector(new ApplicationInjector());
-			messageService = injector.getInstance(MessageService.class);	
-
-			// initialise kafka producer
-			KafkaConfig config = new KafkaConfig();
-			kafkaProducer = new KafkaProducer<>(config.getKafkaProps());			
+		public ProducerTask() {		
 			
 		}
 		@Override
