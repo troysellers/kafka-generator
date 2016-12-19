@@ -54,10 +54,7 @@ public class SimpleGenerator {
 	}	
 	
 	class ProducerTask extends TimerTask {
-		
-		public ProducerTask() {		
-			
-		}
+
 		@Override
 		public void run() {
 	
@@ -76,10 +73,6 @@ public class SimpleGenerator {
 				}
 			});
 		}
-		
 	}
-	
-	
-	
 }
 
