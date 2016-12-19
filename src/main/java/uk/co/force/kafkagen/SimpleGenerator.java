@@ -29,7 +29,6 @@ public class SimpleGenerator {
 	public SimpleGenerator() {
 		
 		logger = LoggerFactory.getLogger(SimpleGenerator.class);
-		logger.info("Started...");
 		
 		// get the injected message service that will generate the messages we send to Kafka
 		// if you want to change the message, simply configure a concrete implementation of the message service
