@@ -1,0 +1,1 @@
+worker: java -jar target/kafka-gen-jar-with-dependencies.jar

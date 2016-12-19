@@ -41,7 +41,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>uk.co.force.kafka-gen.SimpleGenerator</mainClass>
+							<mainClass>uk.co.force.kafkagen.SimpleGenerator</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
