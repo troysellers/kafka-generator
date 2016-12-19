@@ -44,6 +44,13 @@ public class SimpleGenerator {
 		Timer timer = new Timer();
 		timer.schedule(new ProducerTask(), 0, 1000); //start immediately and post every second
 		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				kafkaProducer.close();
+			}
+		});
+		
 	}	
 	
 	class ProducerTask extends TimerTask {
