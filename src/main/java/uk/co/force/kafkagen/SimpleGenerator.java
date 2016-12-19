@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import uk.co.force.kafkagen.services.MessageService;
@@ -19,8 +20,7 @@ import uk.co.force.kafkagen.services.MessageService;
 public class SimpleGenerator {
 
 	protected Logger logger;
-	protected MessageService messageService;
-	protected Producer<byte[], byte[]> kafkaProducer;
+
 	
 	public static void main (String[] args) {
 		
@@ -32,31 +32,32 @@ public class SimpleGenerator {
 		
 		logger = LoggerFactory.getLogger(SimpleGenerator.class);
 		logger.info("Started...");
-		// get the injected message service that will generate the messages we send to Kafka
-		// if you want to change the message, simply configure a concrete implementation of the message service
-		// in the ApplicationInjector class
-		Injector injector = Guice.createInjector(new ApplicationInjector());
-		MessageService messageService = injector.getInstance(MessageService.class);
-
-		KafkaConfig config = new KafkaConfig();
-		Producer<byte[], byte[]> kafkaProducer = new KafkaProducer<>(config.getKafkaProps());
 		
 		Timer timer = new Timer();
 		timer.schedule(new ProducerTask(), 0, 1000); //start immediately and post every second
 		
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				logger.info("Attempting to shutdown kafka");
-				kafkaProducer.close();
-			}
-		});
 	}	
 	
 	class ProducerTask extends TimerTask {
 
+		private MessageService messageService;
+		private Producer<byte[], byte[]> kafkaProducer;
+		
+		public ProducerTask() {
+			// get the injected message service that will generate the messages we send to Kafka
+			// if you want to change the message, simply configure a concrete implementation of the message service
+			// in the ApplicationInjector class
+			Injector injector = Guice.createInjector(new ApplicationInjector());
+			messageService = injector.getInstance(MessageService.class);	
+
+			// initialise kafka producer
+			KafkaConfig config = new KafkaConfig();
+			kafkaProducer = new KafkaProducer<>(config.getKafkaProps());			
+			
+		}
 		@Override
 		public void run() {
+	
 			String message = messageService.getMessageData();
 			logger.info("Getting ready to send message :- \n{}", message);
 			ProducerRecord<byte[], byte[]> producerRecord = new ProducerRecord<byte[], byte[]>("interactions", message.getBytes());
