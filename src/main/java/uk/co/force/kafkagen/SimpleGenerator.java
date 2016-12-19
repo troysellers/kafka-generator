@@ -41,7 +41,7 @@ public class SimpleGenerator {
 	class ProducerTask extends TimerTask {
 
 		private MessageService messageService;
-		private Producer<byte[], byte[]> kafkaProducer;
+		private Producer<String,String> kafkaProducer;
 		
 		public ProducerTask() {
 			// get the injected message service that will generate the messages we send to Kafka
@@ -60,7 +60,7 @@ public class SimpleGenerator {
 	
 			String message = messageService.getMessageData();
 			logger.info("Getting ready to send message :- \n{}", message);
-			ProducerRecord<byte[], byte[]> producerRecord = new ProducerRecord<byte[], byte[]>("interactions", message.getBytes());
+			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("interactions", message);
 			
 			// send and process asynchronous
 			kafkaProducer.send(producerRecord, new Callback() {
