@@ -58,7 +58,6 @@ public class SimpleGenerator {
 		public void run() {
 	
 			String message = messageService.getMessageData();
-			logger.info("Getting ready to send message :- \n{}", message);
 			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("interactions", message);
 			
 			// send and process asynchronous
