@@ -3,7 +3,9 @@
 This is a simple java application that will send a message to a Kafka Topic on a configured interval.
 I haven't tested with a local version of Kafka and this only ever runs on Heroku with Heroku Kafka
 
-TODO - Document
+Clone this repository and provide your own implementation of MessageService class. 
+Configure Guice dependency injection in the ApplicationInjector.. 
+
 
 ## required env variables
 
