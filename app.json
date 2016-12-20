@@ -1,0 +1,17 @@
+{
+  "name": "Kafka Data Generator",
+  "description": "A simple java application that sends messages to a Kafka topic",
+  "repository": "https://github.com/ibigfoot/kafka-generator",
+  "logo": "https://s3.amazonaws.com/assets.heroku.com/addons.heroku.com/icons/1581/original.png?1474679816",
+  "keywords": ["java", "kafka", "producer"],
+  "env":{
+  	"KAFKA_TOPIC": {
+  		"description": "The Kafka topic that this generator is going to send messages to",
+  		"value":"Your kafka topic here"
+  	},
+  	"INTERVAL" : {
+  		"description":"The time in milliseconds between each message. e.g. 1000 = one message per second",
+  		"value":"1000"
+  	}
+  }
+}

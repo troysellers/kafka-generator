@@ -6,6 +6,8 @@ I haven't tested with a local version of Kafka and this only ever runs on Heroku
 Clone this repository and provide your own implementation of MessageService class. 
 Configure Guice dependency injection in the ApplicationInjector.. 
 
+Or 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## required env variables
 
