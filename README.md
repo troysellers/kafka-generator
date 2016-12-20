@@ -11,7 +11,7 @@ Or
 
 ## required env variables
 
-These variables will be added automatically to your app when you configure an Heroku Kafka addon.
+These variables will be added automatically to your app when you [configure an Heroku Kafka addon](https://devcenter.heroku.com/articles/kafka-on-heroku#kafka-concepts).
 - KAFKA_CLIENT_CERT
 - KAFKA_CLIENT_CERT_KEY
 - KAFKA_TRUSTED_CERT
