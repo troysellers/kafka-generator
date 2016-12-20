@@ -18,7 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.jkutner.EnvKeyStore;
-
+/**
+ * Builds the properties for the Kafka Producer. 
+ * Creates key store from the env variables.
+ */
 public class KafkaConfig {
 
 	private Logger logger;
@@ -48,6 +51,7 @@ public class KafkaConfig {
 					props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
 					props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
 					props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
+					// configured to use Strings as key and value
 					props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 					props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 					
