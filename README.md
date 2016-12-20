@@ -29,7 +29,7 @@ java -version
 mvn -version
 ```
 
-Get the heroku kafka environment 
+Get the heroku kafka environment (unless you want to build your own local Kafka cluster...)
 ```
 heroku config -s -a HEROKU_APP_NAME > .env
 set -o allexport
@@ -37,7 +37,7 @@ source .env
 set +o allexport
 ```
 
-### add .env to the .gitignore please! 
+### add .env to the .gitignore (or similar for you chosen repo) 
 
 Build using Maven
 ```
