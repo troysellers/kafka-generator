@@ -56,7 +56,7 @@ public class KafkaConfig {
 					props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 					
 					try {
-						logger.info(System.getenv("KAFKA_TRUSTED_CERT"));
+
 						EnvKeyStore envTrustStore = EnvKeyStore.createWithRandomPassword("KAFKA_TRUSTED_CERT");
 						EnvKeyStore envKeyStore = EnvKeyStore.createWithRandomPassword("KAFKA_CLIENT_CERT_KEY", "KAFKA_CLIENT_CERT");
 						

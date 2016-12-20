@@ -21,3 +21,30 @@ Also, add
 - KAFKA_TOPIC : The topic that you want to send messages to
 - INTERVAL : The interval in milliseconds you want a message sent. e.g. if you want every second set this to 1000 
 
+## Run local
+
+1. You will want to have Java 1.8 installed and Maven 3
+```
+java -version
+mvn -version
+```
+
+2. Get the heroku kafka environment
+```
+heroku config -s -a HEROKU_APP_NAME > .env
+set -o allexport
+source .env
+set +o allexport
+```
+
+3. Build using Maven
+```
+mvn clean package
+```
+
+4. Run
+
+```
+java -jar target/kafka-gen-jar-with-dependencies.jar
+```
+
