@@ -23,13 +23,13 @@ Also, add
 
 ## Run local
 
-1. You will want to have Java 1.8 installed and Maven 3
+You will want to have Java 1.8 installed and Maven 3
 ```
 java -version
 mvn -version
 ```
 
-2. Get the heroku kafka environment
+Get the heroku kafka environment 
 ```
 heroku config -s -a HEROKU_APP_NAME > .env
 set -o allexport
@@ -37,12 +37,14 @@ source .env
 set +o allexport
 ```
 
-3. Build using Maven
+### add .env to the .gitignore please! 
+
+Build using Maven
 ```
 mvn clean package
 ```
 
-4. Run
+Run
 
 ```
 java -jar target/kafka-gen-jar-with-dependencies.jar
