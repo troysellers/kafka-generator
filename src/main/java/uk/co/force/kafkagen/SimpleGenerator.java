@@ -75,8 +75,15 @@ public class SimpleGenerator {
 		@Override
 		public void run() {
 	
+			StringBuilder topicBuilder = new StringBuilder();
+			if(System.getenv("KAFKA_PREFIX") != null) {
+				topicBuilder.append(System.getenv("KAFKA_PREFIX"));
+				logger.info("We are using a multi-tenant KAFKA plan");
+			} 
+			topicBuilder.append(System.getenv("KAFKA_TOPIC"));
+			
 			String message = messageService.getMessageData();
-			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(System.getenv("KAFKA_TOPIC"), message);
+			ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(topicBuilder.toString(), message);
 			
 			// send and process asynchronous
 			kafkaProducer.send(producerRecord, new Callback() {

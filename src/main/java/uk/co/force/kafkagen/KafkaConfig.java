@@ -72,12 +72,16 @@ public class KafkaConfig {
 						
 						
 					} catch (IOException ioe) {
+						ioe.printStackTrace();
 						throw new RuntimeException(ioe);
 					} catch (KeyStoreException kse) {
+						kse.printStackTrace();
 						throw new RuntimeException(kse);
 					} catch (NoSuchAlgorithmException nsa) {
+						nsa.printStackTrace();
 						throw new RuntimeException(nsa);
 					} catch (CertificateException ce) {
+						ce.printStackTrace();
 						throw new RuntimeException(ce);
 					}
 					break;
