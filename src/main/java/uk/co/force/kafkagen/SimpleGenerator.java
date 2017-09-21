@@ -56,7 +56,7 @@ public class SimpleGenerator {
 		Timer timer = new Timer();
 		timer.schedule(new ProducerTask(), 0, Integer.parseInt(System.getenv("INTERVAL"))); //start immediately and post every second
 		
-		// trap shutdown signal and close Kafka Producer neatly.
+		// trap shutdown signal and close Kafka Producer neatly. 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
@@ -78,7 +78,6 @@ public class SimpleGenerator {
 			StringBuilder topicBuilder = new StringBuilder();
 			if(System.getenv("KAFKA_PREFIX") != null) {
 				topicBuilder.append(System.getenv("KAFKA_PREFIX"));
-				logger.info("We are using a multi-tenant KAFKA plan");
 			} 
 			topicBuilder.append(System.getenv("KAFKA_TOPIC"));
 			
@@ -92,7 +91,7 @@ public class SimpleGenerator {
 					if(exception != null) 
 						exception.printStackTrace();
 					else
-						logger.info("We sent message to Kafka Topic as offset {}", metadata.offset());
+						logger.info("We sent message to Kafka Topic partition {} offset {}", metadata.partition(), metadata.offset());
 				}
 			});
 		}
@@ -103,14 +102,14 @@ public class SimpleGenerator {
 	 */
 	private void testForEnvironmentVariables() {
 		
-		Map<String, String> ennvironment = System.getenv();
+		Map<String, String> environment = System.getenv();
 		
-		if(!ennvironment.containsKey("INTERVAL") || 
-				!ennvironment.containsKey("KAFKA_URL") || 
-				!ennvironment.containsKey("KAFKA_CLIENT_CERT") ||
-				!ennvironment.containsKey("KAFKA_CLIENT_CERT_KEY") || 
-				!ennvironment.containsKey("KAFKA_TOPIC") ||
-				!ennvironment.containsKey("KAFKA_TRUSTED_CERT")) {
+		if(!environment.containsKey("INTERVAL") || 
+				!environment.containsKey("KAFKA_URL") || 
+				!environment.containsKey("KAFKA_CLIENT_CERT") ||
+				!environment.containsKey("KAFKA_CLIENT_CERT_KEY") || 
+				!environment.containsKey("KAFKA_TOPIC") ||
+				!environment.containsKey("KAFKA_TRUSTED_CERT")) {
 			
 			logger.error("You haven't configured your Kafka Generator environment variables correctly. See the README for full description of required values (most are provisioned by attaching a Kafka addon)");
 			throw new RuntimeException("Environment variables have not been configured correctly... ");
